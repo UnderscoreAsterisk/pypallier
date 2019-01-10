@@ -19,7 +19,8 @@ def generate_key(n_len):
 def encrypt(m, key):
 	(n, g) = key
 
-	t = int(time())
+	#t = int(time())
+	t = 500
 	rand_state = gmpy2.random_state(t)
 	r = gmpy2.mpz_random(rand_state, n-1)+1
 	
