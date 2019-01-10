@@ -4,13 +4,11 @@ from matplotlib import pyplot as plt
 
 import pallier
 
-ekey, dkey = pallier.generate_key(5)
+ekey, dkey = pallier.generate_key(7)
 
 def new_encrypt(num):
 	global ekey
-	e = pallier.encrypt(num, ekey)
-	print e
-	return int(e)
+	return int(pallier.encrypt(num, ekey))
 
 def new_decrypt(num):
 	global ekey
@@ -25,19 +23,18 @@ height, width = img.shape
 
 print "Loaded %s in grayscale, encrypting image.." % fname
 
-img_enc = np.zeros((height, width), dtype=np.uint64)
+img_enc = np.zeros(shape=img.shape, dtype=np.uint64)
 
 for row in range(height):
 	for pixel in range(width):
-		img_enc[row][pixel] = pallier.encrypt(img[row][pixel], ekey)
+		img_enc[row][pixel] = np.uint64(pallier.encrypt(img[row][pixel], ekey))
 
 print "%s encrypted, Decrypting image.." % fname
 
-img_dec = np.zeros((height, width), dtype=np.uint8)
+img_dec = np.zeros(shape=img.shape, dtype=np.uint8)
 for row in range(height):
 	for pixel in range(width): 
-		e = pallier.encrypt(img[row][pixel], ekey)
-		img_dec[row][pixel] = pallier.decrypt(e, dkey, ekey)
+		img_dec[row][pixel] = np.uint8(pallier.decrypt(img_enc[row][pixel], dkey, ekey))
 
 print "Image decrypted"
 cv2.imwrite("dec_"+fname, img_dec)
