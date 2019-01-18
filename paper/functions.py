@@ -6,3 +6,10 @@ def addition(data):
         msg += chr(sum(data[i])-o)
         i += 1
     return msg
+
+def green(data):
+	offsets =[126,121,137,137,327,5624,2912,327,257,137,127]
+	msg=''
+	for i in offsets:
+		msg+=chr(data[i][1])
+	return msg
